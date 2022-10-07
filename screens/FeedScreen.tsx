@@ -1,27 +1,19 @@
-import React from "react"
 import { Text, View, TouchableOpacity } from 'react-native'
+import Container from '../components/layouts/Container'
 
 interface IFeedScreenProps {
   navigation: {
-    navigate: (arg: string) => void;
+    navigate: (arg: string) => null;
   }
 }
 
 // export const FeedScreen = () => {
 export default (props: IFeedScreenProps) => {
   return (
-    <View>
+    <Container navigate={props.navigation.navigate}>
       <Text>Feed Screen</Text>
 
-      <TouchableOpacity onPress={() => props.navigation.navigate('Search')}>
-        <Text>Search</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => props.navigation.navigate('Account')}>
-        <Text>Account</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => props.navigation.navigate('PostForm')}>
-        <Text>Post Form</Text>
-      </TouchableOpacity>
-    </View>
+
+    </Container>
   )
 }
