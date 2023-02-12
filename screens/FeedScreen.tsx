@@ -13,7 +13,6 @@ export default (props: IFeedScreenProps) => {
     <Container navigate={props.navigation.navigate}>
       <Text>Feed Screen</Text>
 
-
     </Container>
   )
 }
