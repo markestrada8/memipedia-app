@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity } from 'react-native'
+import { Text } from 'react-native'
 import Container from '../components/layouts/Container'
 
 interface IFeedScreenProps {
@@ -9,10 +9,10 @@ interface IFeedScreenProps {
 
 // export const FeedScreen = () => {
 export default (props: IFeedScreenProps) => {
+
   return (
     <Container navigate={props.navigation.navigate}>
       <Text>Feed Screen</Text>
-
     </Container>
   )
 }

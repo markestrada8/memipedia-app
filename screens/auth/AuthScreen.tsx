@@ -4,6 +4,7 @@ import { Button } from '../../components/Button'
 import { formatErrors } from '../../utils/errorFormatter'
 import API from '../../utils/API'
 import CurrentUserContext from '../../context/CurrentUserContext'
+import * as SecureStore from 'expo-secure-store'
 
 import textInputStyles from '../../styles/form-styles/textInputStyles'
 import authScreenStyles from '../../styles/stacks/auth/authScreenStyles'
@@ -20,7 +21,7 @@ export default (props: IAuthScreenProps) => {
   const [password, setPassword] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const userState = useContext(CurrentUserContext)
+  const { getUser } = useContext(CurrentUserContext)
 
 
 
@@ -48,15 +49,21 @@ export default (props: IAuthScreenProps) => {
       }
     }
     API.post('memipedia_user_token', payload)
-      .then(response => {
-        // console.log("Response from JWT POST", response.data)
+      .then(async response => {
+        console.log("Response from JWT POST", response.data)
 
         if (response.data.jwt) {
+          // Set token response in Expo SecureStore as (k, v) pair
+          await SecureStore.setItemAsync('memipedia_secure_token', response.data.jwt)
+          getUser()
+          setIsSubmitting(false)
           props.navigation.navigate('Feed')
         } else {
+          setIsSubmitting(false)
           alert('Wrong email or password, please try again')
         }
-        setIsSubmitting(false)
+        // Needs to run before changes to stack location are applied
+        // setIsSubmitting(false)
       })
       .catch(error => {
         setIsSubmitting(false)
@@ -77,14 +84,16 @@ export default (props: IAuthScreenProps) => {
 
 
         if (response.data.memipedia_user) {
-          props.navigation.navigate('Feed')
+          handleLogin()
         } else {
+          setIsSubmitting(false)
           alert(`Error creating user account: ${formatErrors(response.data.errors)}`)
         }
-        setIsSubmitting(false)
+
       })
       .catch(error => {
         setIsSubmitting(false)
+        console.log('New User POST error: ', error)
         alert('Error creating user account')
       })
   }
@@ -98,7 +107,6 @@ export default (props: IAuthScreenProps) => {
 
   return (
     <ScrollView style={authScreenStyles.container}>
-      {/* <Text style={textInputStyles.textElement}>{formToShow}</Text> */}
       <View style={textInputStyles.textInputContainer}>
         <TextInput
           style={textInputStyles.textInput}
@@ -107,8 +115,10 @@ export default (props: IAuthScreenProps) => {
           onChangeText={val => setEmail(val)}
           autoCapitalize="none"
           spellCheck={false}
+          keyboardType='email-address'
         />
       </View>
+
       <View style={textInputStyles.textInputContainer}>
         <TextInput
           style={textInputStyles.textInput}
@@ -116,10 +126,9 @@ export default (props: IAuthScreenProps) => {
           value={password}
           onChangeText={val => setPassword(val)}
           secureTextEntry={true}
+          onSubmitEditing={handleSubmit}
         />
       </View>
-      {/* String represntation of a data object */}
-      {/* <Text style={{ color: "white" }}>{JSON.stringify(userState.currentUser)}</Text> */}
 
       <TouchableOpacity onPress={handleAuthTypePress}>
         <Text style={textInputStyles.textElement}>{screenTypeText()}</Text>
@@ -130,8 +139,6 @@ export default (props: IAuthScreenProps) => {
         :
         <Button text={formToShow} onPress={handleSubmit} disabled={isSubmitting} />
       }
-
-      {/* <Button text={formToShow} action={handleSubmit} /> */}
 
     </ScrollView>
   )
