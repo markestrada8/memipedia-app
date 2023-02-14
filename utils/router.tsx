@@ -6,8 +6,23 @@ import AccountScreen from "../screens/AccountScreen";
 import FeedScreen from "../screens/FeedScreen";
 import PostFormScreen from "../screens/PostFormScreen";
 import SearchScreen from "../screens/SearchScreen";
+import HeaderLogo from "../components/images/HeaderLogo";
+import AuthScreen from "../screens/auth/AuthScreen";
 
 import { colors } from '../styles/colors'
+
+
+const AuthStack = createStackNavigator(
+  {
+    Auth: AuthScreen
+  },
+  {
+    initialRouteName: 'Auth',
+    defaultNavigationOptions: {
+      header: () => false
+    }
+  }
+)
 
 const AppStack = createStackNavigator(
   {
@@ -23,7 +38,8 @@ const AppStack = createStackNavigator(
       headerStyle: {
         backgroundColor: colors.dark,
       },
-      headerTintColor: '#fff'
+      headerTintColor: '#fff',
+      headerTitle: () => <HeaderLogo />
     }
   }
 )
@@ -31,10 +47,11 @@ const AppStack = createStackNavigator(
 export default createAppContainer(
   createSwitchNavigator(
     {
-      App: AppStack
+      App: AppStack,
+      Auth: AuthStack,
     },
     {
-      initialRouteName: 'App'
+      initialRouteName: 'Auth'
     }
   )
 )
