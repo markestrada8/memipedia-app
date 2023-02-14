@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import CurrentUserProvider from './provider/CurrentUserProvider';
-import router from './utils/router'
+import router from './Router/router'
 // import { createAppContainer } from 'react-navigation';
 const AppContainer = router
 
