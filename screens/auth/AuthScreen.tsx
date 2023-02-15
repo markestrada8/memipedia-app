@@ -50,8 +50,7 @@ export default (props: IAuthScreenProps) => {
     }
     API.post('memipedia_user_token', payload)
       .then(async response => {
-        console.log("Response from JWT POST", response.data)
-
+        // console.log("Response from JWT POST", response.data)
         if (response.data.jwt) {
           // Set token response in Expo SecureStore as (k, v) pair
           await SecureStore.setItemAsync('memipedia_secure_token', response.data.jwt)
@@ -80,9 +79,7 @@ export default (props: IAuthScreenProps) => {
     }
     API.post('memipedia_users', payload)
       .then(response => {
-        console.log("Response from Create User POST", response.data)
-
-
+        // console.log("Response from Create User POST", response.data)
         if (response.data.memipedia_user) {
           handleLogin()
         } else {

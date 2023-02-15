@@ -16,7 +16,7 @@ export default (props: ICurrentUserProviderProps) => {
     API.get('logged_in', { headers: { Authorization: `Bearer ${token}` } })
       .then(response => {
 
-        console.log("User pro vider GET: ", response.data)
+        // console.log("User pro vider GET: ", response.data)
 
         if (response.data.memipedia_user) {
           setCurrentUser(response.data.memipedia_user)
