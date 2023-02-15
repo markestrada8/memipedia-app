@@ -5,7 +5,7 @@ import AntIcon from 'react-native-vector-icons/AntDesign'
 import bottomTabStyles from '../../styles/navigation-styles/bottomTabStyles'
 
 interface IBottomTabBarProps {
-  navigate: (arg: string) => null
+  navigate: (arg: string) => void
 }
 
 export default (props: IBottomTabBarProps) => {

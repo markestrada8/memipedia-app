@@ -36,12 +36,12 @@ const AppStack = createStackNavigator(
     PostDetail: {
       screen: PostDetailScreen,
       navigationOptions: {
-        headerLeft: undefined
+        headerLeft: () => null
       }
     }
   },
   {
-    initialRouteName: 'PostForm',
+    initialRouteName: 'Feed',
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: colors.dark,

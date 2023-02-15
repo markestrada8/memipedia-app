@@ -5,7 +5,7 @@ import BaseStyles from '../../styles/common/baseStyles'
 
 interface IContainerProps {
   children: any
-  navigate: (arg: string) => null
+  navigate: (route: string, data?: any) => void
 }
 
 export default (props: IContainerProps) => {

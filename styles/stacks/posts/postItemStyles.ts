@@ -24,5 +24,9 @@ export default StyleSheet.create({
     color: 'white',
     fontSize: RFValue(20, 680),
     fontWeight: '900',
+  },
+  contentText: {
+    color: 'white',
+    fontSize: RFValue(14, 680)
   }
 })

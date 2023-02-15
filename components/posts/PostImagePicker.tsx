@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { Button, Image, View } from 'react-native'
+import { TouchableOpacity, Image, View } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
+import EIcons from 'react-native-vector-icons/EvilIcons'
+import colors from '../../styles/colors'
 
 interface IPostImagePickerProps {
   setPostImage: (arg: any) => void
@@ -18,7 +20,7 @@ export default (props: IPostImagePickerProps) => {
       quality: 1,
     });
 
-    console.log(result);
+    // console.log(result);
 
     if (!result.cancelled) {
       setImage(result.uri)
@@ -27,14 +29,21 @@ export default (props: IPostImagePickerProps) => {
   };
 
   return (
-    <View style={{
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}>
 
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
-      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-    </View>
+    <TouchableOpacity
+      onPress={pickImage}
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 100,
+        width: 100
+      }}
+    >
+      {image ?
+        (<Image source={{ uri: image }} style={{ width: 100, height: 100 }} />)
+        :
+        (<EIcons name="camera" color={'#000'} size={42} />)
+      }
+    </TouchableOpacity>
   );
 }

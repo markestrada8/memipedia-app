@@ -1,14 +1,16 @@
-import { useState } from "react"
-import { View, TextInput, ActivityIndicator } from 'react-native'
-import { Button } from "../components/Button"
+import { useState } from 'react'
+import { View, TextInput, ScrollView } from 'react-native'
+import { Button } from '../components/Button'
 import PostImagePicker from '../components/posts/PostImagePicker'
-import * as SecureStore from "expo-secure-store"
-import API from "../utils/API"
-import Container from "../components/layouts/Container"
+import * as SecureStore from 'expo-secure-store'
+import API from '../utils/API'
+import Container from '../components/layouts/Container'
+
+import postFormStyles from '../styles/stacks/posts/postFormStyles'
 
 interface IPostFormScreenProps {
   navigation: {
-    navigate: (arg: string) => null;
+    navigate: (route: string, data: any) => null;
   }
 }
 
@@ -51,6 +53,11 @@ export default (props: IPostFormScreenProps) => {
       .then(response => {
         // console.log('Create post POST response: ', response.data)
         setIsSubmitting(false)
+        if (response.data.memipedia_post) {
+          props.navigation.navigate('PostDetail', { post: response.data.memipedia_post })
+        } else {
+          alert('There was an error creating your post')
+        }
       })
       .catch(error => {
         console.log('Error creating post: ', error)
@@ -59,36 +66,41 @@ export default (props: IPostFormScreenProps) => {
   }
 
   return (
-    <Container navigate={props.navigation.navigate}>
-      <View style={{ height: '100%' }}>
-        <TextInput
-          placeholder='Name'
-          value={name}
-          onChangeText={val => setName(val)}
-        />
-        <TextInput
-          placeholder='Description'
-          value={content}
-          onChangeText={val => setContent(val)}
-          style={{ borderWidth: 2, borderColor: 'black' }}
-          multiline={true}
-        />
-        <View style={{ marginTop: 40, height: 100 }}>
+    <Container navigate={props.navigation.navigate} >
+      <ScrollView style={[postFormStyles.container, { backgroundColor: '#fff' }]} >
+        <View style={postFormStyles.formGrid}>
           <PostImagePicker setPostImage={setPostImage} />
+          <View style={postFormStyles.textInputContainer}>
+            <TextInput
+              placeholder='Name'
+              value={name}
+              onChangeText={val => setName(val)}
+              style={postFormStyles.textInput}
+            />
+            <TextInput
+              placeholder='Description'
+              value={content}
+              onChangeText={val => setContent(val)}
+              multiline={true}
+              style={[postFormStyles.textInput, postFormStyles.textArea]}
+            />
+          </View>
         </View>
-        {isSubmitting ?
-          <Button
-            text={'Submitting...'}
-            disabled={true}
-          />
-          :
-          <Button
-            text={'Submit'}
-            onPress={handleSubmit}
-          />
-        }
+        <View style={postFormStyles.buttonContainer}>
+          {isSubmitting ?
+            <Button
+              text={'Submitting...'}
+              disabled={true}
+            />
+            :
+            <Button
+              text={'Submit'}
+              onPress={handleSubmit}
+            />
+          }
+        </View>
 
-      </View>
+      </ScrollView>
     </Container>
   )
 }
