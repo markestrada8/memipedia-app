@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Image, View, Platform } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+import React, { useState } from 'react'
+import { Button, Image, View } from 'react-native'
+import * as ImagePicker from 'expo-image-picker'
 
-export default function ImagePickerExample() {
-  const [image, setImage] = useState(null);
+interface IPostImagePickerProps {
+  setPostImage: (arg: any) => void
+}
+
+export default (props: IPostImagePickerProps) => {
+  const [image, setImage] = useState('')
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -15,15 +19,20 @@ export default function ImagePickerExample() {
     });
 
     console.log(result);
-    //@ts-ignore
-    if (!result.canceled) {
-      //@ts-ignore
-      setImage(result.assets[0].uri);
+
+    if (!result.cancelled) {
+      setImage(result.uri)
+      props.setPostImage(result.uri)
     }
   };
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}>
+
       <Button title="Pick an image from camera roll" onPress={pickImage} />
       {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
     </View>

@@ -8,7 +8,8 @@ import PostFormScreen from "../screens/PostFormScreen"
 import SearchScreen from "../screens/SearchScreen"
 import HeaderLogo from "../components/images/HeaderLogo"
 import AuthScreen from "../screens/auth/AuthScreen"
-import AuthLoadingScreen from "../screens/auth/AuthLoadingScreen";
+import AuthLoadingScreen from "../screens/auth/AuthLoadingScreen"
+import PostDetailScreen from "../screens/PostDetailScreen";
 
 import { colors } from '../styles/colors'
 
@@ -31,10 +32,16 @@ const AppStack = createStackNavigator(
     Feed: FeedScreen,
     Search: SearchScreen,
     Account: AccountScreen,
-    PostForm: PostFormScreen
+    PostForm: PostFormScreen,
+    PostDetail: {
+      screen: PostDetailScreen,
+      navigationOptions: {
+        headerLeft: undefined
+      }
+    }
   },
   {
-    initialRouteName: 'Feed',
+    initialRouteName: 'PostForm',
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: colors.dark,

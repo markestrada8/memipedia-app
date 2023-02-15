@@ -132,9 +132,9 @@ export default (props: IAuthScreenProps) => {
       </TouchableOpacity>
       {isSubmitting
         ?
-        <Button text={'Submitting...'} onPress={handleSubmit} disabled={isSubmitting} />
+        <Button text={'Submitting...'} disabled={true} />
         :
-        <Button text={formToShow} onPress={handleSubmit} disabled={isSubmitting} />
+        <Button text={formToShow} onPress={handleSubmit} />
       }
 
     </ScrollView>
