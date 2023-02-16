@@ -20,11 +20,8 @@ export default (props: IAccountScreenProps) => {
   }
 
   return (
-    <View>
-      <Text>Account Screen</Text>
-      <View style={{ marginTop: 20 }}>
-        <Button onPress={handleLogOut} text="Sign Out" />
-      </View>
+    <View style={{ marginTop: 20 }}>
+      <Button onPress={handleLogOut} text="Sign Out" />
     </View>
   )
 }

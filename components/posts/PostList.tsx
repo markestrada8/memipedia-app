@@ -19,8 +19,8 @@ export default (props: IPostListProps) => {
 
   const renderPosts = () => {
 
-    if (props.isLoading) {
-      return <ActivityIndicator />
+    if (props.isLoading && props.posts.length === 0) {
+      return <ActivityIndicator color="white" size="large" />
     } else if (props.posts.length > 0) {
       return props.posts.map((post: any) => (
         <TouchableOpacity

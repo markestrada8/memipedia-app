@@ -3,8 +3,8 @@ export const colors = {
   // primary: "#fff",
   primary: "#b55b16",
   // dark: "#1f2125",
-  dark: "#777",
+  dark: "#000",
   warning: "#ac262b",
-  highlight: "#eb523c",
+  highlight: "#de6d16",
   lightGrey: "#EAEAEA",
 }

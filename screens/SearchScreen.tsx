@@ -55,15 +55,19 @@ export default (props: ISearchScreenProps) => {
   }
 
   const renderQueries = () => {
-    if (isLoading) {
-      return <ActivityIndicator />
-    } else if (emptyQuery) {
+    if (emptyQuery) {
       return (
         <View style={searchStyles.noResultsContainer}>
           <Text style={searchStyles.noResultsText}>No search results.</Text>
         </View>)
     } else if (posts && posts.length > 0) {
-      return <PostList posts={posts} navigate={props.navigation.navigate} />
+      return (
+        <PostList
+          posts={posts}
+          navigate={props.navigation.navigate}
+          getPosts={handleSearch}
+          isLoading={isLoading}
+        />)
     } else {
       return null
     }

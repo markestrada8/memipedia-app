@@ -20,6 +20,9 @@ export default (props: IFeedScreenProps) => {
 
   const getPosts = async () => {
     const token = await SecureStore.getItemAsync("memipedia_secure_token")
+
+    setIsLoading(true)
+
     API.get('memipedia_posts', {
       headers: { Authorization: `Bearer ${token}` }
     })
