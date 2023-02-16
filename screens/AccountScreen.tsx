@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { Button } from '../components/Button'
 import CurrentUserContext from "../context/CurrentUserContext"
 import * as SecureStore from 'expo-secure-store'
@@ -20,7 +20,7 @@ export default (props: IAccountScreenProps) => {
   }
 
   return (
-    <View style={{ marginTop: 20 }}>
+    <View style={{ padding: 15 }}>
       <Button onPress={handleLogOut} text="Sign Out" />
     </View>
   )
