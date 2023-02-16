@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
-import { TouchableOpacity, View, ActivityIndicator, ScrollView } from 'react-native'
-import API from '../utils/API'
+import { View } from 'react-native'
 import * as SecureStore from 'expo-secure-store'
 
+import API from '../utils/API'
 import Container from '../components/layouts/Container'
-import PostItem from '../components/posts/PostItem'
-import BaseStyles from '../styles/common/baseStyles'
+import PostList from '../components/posts/PostList'
 
 
 interface IFeedScreenProps {
@@ -39,29 +38,16 @@ export default (props: IFeedScreenProps) => {
     getPosts()
   }, [])
 
-  const handleItemPress = (post: any) => {
-    props.navigation.navigate('PostDetail', { post: post })
-  }
-
   return (
     <Container navigate={props.navigation.navigate}>
       <View>
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <ScrollView style={BaseStyles.containerWithBottomTabBar}>
-            {posts.map(post => {
-              return (
-                <TouchableOpacity
-                  key={post.id}
-                  onPress={() => handleItemPress(post)}
-                >
-                  <PostItem post={post} />
-                </TouchableOpacity>
-              )
-            })}
-          </ScrollView>
-        )}
+
+        <PostList
+          isLoading={isLoading}
+          posts={posts}
+          navigate={props.navigation.navigate}
+          getPosts={getPosts}
+        />
 
       </View>
     </Container>
