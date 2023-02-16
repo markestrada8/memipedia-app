@@ -1,15 +1,23 @@
-import React, { useState } from 'react'
-import { TouchableOpacity, Image, View } from 'react-native'
+import React, { useState, forwardRef, useImperativeHandle } from 'react'
+import { TouchableOpacity, Image } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 import EIcons from 'react-native-vector-icons/EvilIcons'
-import colors from '../../styles/colors'
+// import colors from '../../styles/colors'
 
 interface IPostImagePickerProps {
   setPostImage: (arg: any) => void
 }
 
-export default (props: IPostImagePickerProps) => {
+export default forwardRef((props: IPostImagePickerProps, ref) => {
   const [image, setImage] = useState('')
+
+  useImperativeHandle(ref, () => {
+    return {
+      clearImage() {
+        setImage('')
+      }
+    }
+  })
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -46,4 +54,4 @@ export default (props: IPostImagePickerProps) => {
       }
     </TouchableOpacity>
   );
-}
+})

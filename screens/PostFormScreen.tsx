@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { View, TextInput, ScrollView } from 'react-native'
 import { Button } from '../components/Button'
 import PostImagePicker from '../components/posts/PostImagePicker'
@@ -19,6 +19,16 @@ export default (props: IPostFormScreenProps) => {
   const [content, setContent] = useState('')
   const [postImage, setPostImage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const imageRef: any = useRef()
+
+  const setBaseState = () => {
+    imageRef.current.clearImage()
+    setName('')
+    setContent('')
+    setPostImage('')
+    setIsSubmitting(false)
+  }
 
   const buildForm = () => {
     let formData = new FormData()
@@ -52,10 +62,12 @@ export default (props: IPostFormScreenProps) => {
     })
       .then(response => {
         // console.log('Create post POST response: ', response.data)
-        setIsSubmitting(false)
+
         if (response.data.memipedia_post) {
+          setBaseState()
           props.navigation.navigate('PostDetail', { post: response.data.memipedia_post })
         } else {
+          setIsSubmitting(false)
           alert('There was an error creating your post')
         }
       })
@@ -69,7 +81,7 @@ export default (props: IPostFormScreenProps) => {
     <Container navigate={props.navigation.navigate} >
       <ScrollView style={[postFormStyles.container, { backgroundColor: '#fff' }]} >
         <View style={postFormStyles.formGrid}>
-          <PostImagePicker setPostImage={setPostImage} />
+          <PostImagePicker setPostImage={setPostImage} ref={imageRef} />
           <View style={postFormStyles.textInputContainer}>
             <TextInput
               placeholder='Name'
